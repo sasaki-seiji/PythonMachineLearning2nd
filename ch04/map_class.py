@@ -1,6 +1,6 @@
 import numpy as np
 
-from categorical_data import df
+from map_ordinal import df
 
 # create a mapping dict
 # to convert class labels from strings to integers
@@ -23,8 +23,9 @@ if __name__ == '__main__':
 
 # reverse the class label mapping
 inv_class_mapping = {v: k for k, v in class_mapping.items()}
-df['classlabel'] = df['classlabel'].map(inv_class_mapping)
-df
-# 2019.09.08 add
+# 2019.09.10 change
+#df['classlabel'] = df['classlabel'].map(inv_class_mapping)
+#df
 if __name__ == '__main__':
+    df['classlabel'] = df['classlabel'].map(inv_class_mapping)
     print(df)
