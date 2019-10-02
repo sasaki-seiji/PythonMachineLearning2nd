@@ -2,4 +2,5 @@ python-machine-learning-book-2nd-edition-master/
 __pycache__/
 *.png
 aclImdb/
-movie_data.csv
+*.csv
+*.pkl
