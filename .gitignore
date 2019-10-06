@@ -4,3 +4,4 @@ __pycache__/
 aclImdb/
 *.csv
 *.pkl
+*.sqlite
