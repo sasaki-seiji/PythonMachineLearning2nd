@@ -4,6 +4,7 @@ import pickle
 import sqlite3
 import os
 import numpy as np
+from dump_classifier import dump_classifier
 
 # import HashingVectorizer from local dir
 from vectorizer import vect
@@ -12,6 +13,12 @@ app = Flask(__name__)
 
 ######## Preparing the Classifier
 cur_dir = os.path.dirname(__file__)
+
+# 2019.10.14 add
+clf_path = os.path.join(cur_dir, 'pkl_objects', 'classifier.pkl')
+if not os.path.exists(clf_path):
+    dump_classifier(clf_path)
+
 clf = pickle.load(open(os.path.join(cur_dir,
                  'pkl_objects',
                  'classifier.pkl'), 'rb'))
