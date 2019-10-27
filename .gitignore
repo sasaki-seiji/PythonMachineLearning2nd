@@ -6,3 +6,4 @@ aclImdb/
 *.pkl
 *.sqlite
 mnist/
+*.npz
