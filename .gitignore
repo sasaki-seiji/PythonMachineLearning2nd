@@ -5,3 +5,4 @@ aclImdb/
 *.csv
 *.pkl
 *.sqlite
+mnist/
