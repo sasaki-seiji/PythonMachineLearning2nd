@@ -63,3 +63,8 @@ def train_linreg(sess, model, X_train, y_train, num_epochs=10):
         
     return training_costs
 
+def predict_linreg(sess, model, X_test):
+    y_pred = sess.run(model.z_net, 
+                      feed_dict={model.X:X_test})
+    return y_pred
+
