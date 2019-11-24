@@ -7,3 +7,6 @@ aclImdb/
 *.sqlite
 mnist/
 *.npz
+*.index
+*.meta
+*.data-*
