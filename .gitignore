@@ -10,3 +10,4 @@ mnist/
 *.index
 *.meta
 *.data-*
+logs/
