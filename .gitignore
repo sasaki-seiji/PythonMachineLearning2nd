@@ -11,3 +11,4 @@ mnist/
 *.meta
 *.data-*
 logs/
+model/
