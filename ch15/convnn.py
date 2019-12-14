@@ -1,6 +1,8 @@
-import tensorflow as tf
 import numpy as np
 import os
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 from batch_generator import batch_generator
 
@@ -16,36 +18,33 @@ class ConvNN(object):
         self.dropout_rate = dropout_rate
         self.shuffle = shuffle
     
-        # 2019.12.09
-        tf.executing_eagerly()
-
         g = tf.Graph()
         with g.as_default():
             ## set random-seed:
-            tf.compat.v1.set_random_seed(random_seed)
+            tf.set_random_seed(random_seed)
             
             ## build the network:
             self.build()
 
             ## initializer
-            self.init_op = tf.compat.v1.global_variables_initializer()
+            self.init_op = tf.global_variables_initializer()
 
             ## saver
-            self.saver = tf.compat.v1.train.Saver()
+            self.saver = tf.train.Saver()
             
         ## create a session
-        self.sess = tf.compat.v1.Session(graph=g)
+        self.sess = tf.Session(graph=g)
                 
     def build(self):
         
         ## Placeholders for X and y:
-        tf_x = tf.compat.v1.placeholder(tf.float32, 
+        tf_x = tf.placeholder(tf.float32, 
                               shape=[None, 784],
                               name='tf_x')
-        tf_y = tf.compat.v1.placeholder(tf.int32, 
+        tf_y = tf.placeholder(tf.int32, 
                               shape=[None],
                               name='tf_y')
-        is_train = tf.compat.v1.placeholder(tf.bool, 
+        is_train = tf.placeholder(tf.bool, 
                               shape=(),
                               name='is_train')
 
@@ -59,20 +58,20 @@ class ConvNN(object):
                               name='input_y_onehot')
 
         ## 1st layer: Conv_1
-        h1 = tf.compat.v1.layers.conv2d(tf_x_image, 
+        h1 = tf.layers.conv2d(tf_x_image, 
                               kernel_size=(5, 5), 
                               filters=32, 
                               activation=tf.nn.relu)
         ## MaxPooling
-        h1_pool = tf.compat.v1.layers.max_pooling2d(h1, 
+        h1_pool = tf.layers.max_pooling2d(h1, 
                               pool_size=(2, 2), 
                               strides=(2, 2))
         ## 2n layer: Conv_2
-        h2 = tf.compat.v1.layers.conv2d(h1_pool, kernel_size=(5,5), 
+        h2 = tf.layers.conv2d(h1_pool, kernel_size=(5,5), 
                               filters=64, 
                               activation=tf.nn.relu)
         ## MaxPooling 
-        h2_pool = tf.compat.v1.layers.max_pooling2d(h2, 
+        h2_pool = tf.layers.max_pooling2d(h2, 
                               pool_size=(2, 2), 
                               strides=(2, 2))
 
@@ -81,16 +80,16 @@ class ConvNN(object):
         n_input_units = np.prod(input_shape[1:])
         h2_pool_flat = tf.reshape(h2_pool, 
                               shape=[-1, n_input_units])
-        h3 = tf.compat.v1.layers.dense(h2_pool_flat, 1024, 
+        h3 = tf.layers.dense(h2_pool_flat, 1024, 
                               activation=tf.nn.relu)
 
         ## Dropout
-        h3_drop = tf.compat.v1.layers.dropout(h3, 
+        h3_drop = tf.layers.dropout(h3, 
                               rate=self.dropout_rate,
                               training=is_train)
         
         ## 4th layer: Fully Connected (linear activation)
-        h4 = tf.compat.v1.layers.dense(h3_drop, 10, 
+        h4 = tf.layers.dense(h3_drop, 10, 
                               activation=None)
 
         ## Prediction
@@ -107,7 +106,7 @@ class ConvNN(object):
             name='cross_entropy_loss')
         
         ## Optimizer
-        optimizer = tf.compat.v1.train.AdamOptimizer(self.learning_rate)
+        optimizer = tf.train.AdamOptimizer(self.learning_rate)
         optimizer = optimizer.minimize(cross_entropy_loss,
                                        name='train_op')
 
@@ -121,9 +120,6 @@ class ConvNN(object):
             name='accuracy')
 
     def save(self, epoch, path='./tflayers-model/'):
-
-        # 2019.12.09
-        tf.executing_eagerly()
 
         if not os.path.isdir(path):
             os.makedirs(path)

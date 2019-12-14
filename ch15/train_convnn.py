@@ -7,6 +7,5 @@ cnn = ConvNN(random_seed=123)
 cnn.train(training_set=(X_train_centered, y_train), 
           validation_set=(X_valid_centered, y_valid))
 
-# 2019.12.10 del: ValueError
-#cnn.save(epoch=20)
+cnn.save(epoch=20)
 #cnn.save(epoch=2)
