@@ -1,5 +1,7 @@
-import tensorflow as tf
 import numpy as np
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 
 ## wrapper functions 
@@ -7,7 +9,7 @@ import numpy as np
 def conv_layer(input_tensor, name,
                kernel_size, n_output_channels, 
                padding_mode='SAME', strides=(1, 1, 1, 1)):
-    with tf.compat.v1.variable_scope(name):
+    with tf.variable_scope(name):
         ## get n_input_channels:
         ##   input tensor shape: 
         ##   [batch x width x height x channels_in]
@@ -17,14 +19,14 @@ def conv_layer(input_tensor, name,
         weights_shape = (list(kernel_size) + 
                          [n_input_channels, n_output_channels])
 
-        weights = tf.compat.v1.get_variable(name='_weights',
+        weights = tf.get_variable(name='_weights',
                                   shape=weights_shape)
         print(weights)
-        biases = tf.compat.v1.get_variable(name='_biases',
+        biases = tf.get_variable(name='_biases',
                                  initializer=tf.zeros(
                                      shape=[n_output_channels]))
         print(biases)
-        conv = tf.compat.v1.nn.conv2d(input=input_tensor, 
+        conv = tf.nn.conv2d(input=input_tensor, 
                             filter=weights,
                             strides=strides, 
                             padding=padding_mode)
