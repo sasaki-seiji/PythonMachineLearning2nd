@@ -1,9 +1,12 @@
-import tensorflow as tf
 import numpy as np
+# 2019.12.18 change
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 def fc_layer(input_tensor, name, 
              n_output_units, activation_fn=None):
-    with tf.compat.v1.variable_scope(name):
+    with tf.variable_scope(name):
         input_shape = input_tensor.get_shape().as_list()[1:]
         n_input_units = np.prod(input_shape)
         if len(input_shape) > 1:
@@ -12,10 +15,10 @@ def fc_layer(input_tensor, name,
 
         weights_shape = [n_input_units, n_output_units]
 
-        weights = tf.compat.v1.get_variable(name='_weights',
+        weights = tf.get_variable(name='_weights',
                                   shape=weights_shape)
         print(weights)
-        biases = tf.compat.v1.get_variable(name='_biases',
+        biases = tf.get_variable(name='_biases',
                                  initializer=tf.zeros(
                                      shape=[n_output_units]))
         print(biases)
