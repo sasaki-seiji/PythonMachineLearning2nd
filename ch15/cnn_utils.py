@@ -1,6 +1,9 @@
 import os
-import tensorflow as tf
 import numpy as np
+# 2019/12/18 change
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 from batch_generator import batch_generator
 
@@ -28,7 +31,7 @@ def train(sess, training_set, validation_set=None,
 
     ## initialize variables
     if initialize:
-        sess.run(tf.compat.v1.global_variables_initializer())
+        sess.run(tf.global_variables_initializer())
 
     np.random.seed(random_seed) # for shuflling in batch_generator
     for epoch in range(1, epochs+1):
