@@ -1,13 +1,16 @@
-import tensorflow as tf
+# 2019.12.18 change
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 from conv_layer import conv_layer
 from fc_layer import fc_layer
 
 def build_cnn(learning_rate=1e-4):
     ## Placeholders for X and y:
-    tf_x = tf.compat.v1.placeholder(tf.float32, shape=[None, 784],
+    tf_x = tf.placeholder(tf.float32, shape=[None, 784],
                           name='tf_x')
-    tf_y = tf.compat.v1.placeholder(tf.int32, shape=[None],
+    tf_y = tf.placeholder(tf.int32, shape=[None],
                           name='tf_y')
 
     # reshape x to a 4D tensor: 
@@ -49,8 +52,8 @@ def build_cnn(learning_rate=1e-4):
                   activation_fn=tf.nn.relu)
 
     ## Dropout
-    keep_prob = tf.compat.v1.placeholder(tf.float32, name='fc_keep_prob')
-    h3_drop = tf.compat.v1.nn.dropout(h3, keep_prob=keep_prob, 
+    keep_prob = tf.placeholder(tf.float32, name='fc_keep_prob')
+    h3_drop = tf.nn.dropout(h3, keep_prob=keep_prob, 
                             name='dropout_layer')
 
     ## 4th layer: Fully Connected (linear activation)
@@ -75,7 +78,7 @@ def build_cnn(learning_rate=1e-4):
         name='cross_entropy_loss')
 
     ## Optimizer:
-    optimizer = tf.compat.v1.train.AdamOptimizer(learning_rate)
+    optimizer = tf.train.AdamOptimizer(learning_rate)
     optimizer = optimizer.minimize(cross_entropy_loss,
                                    name='train_op')
 
