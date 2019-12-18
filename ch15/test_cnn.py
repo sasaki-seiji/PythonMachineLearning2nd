@@ -1,8 +1,11 @@
 ### Calculate prediction accuracy
 ### on test set
 ### restoring the saved model
-import tensorflow as tf
 import numpy as np
+# 2019.12.18 change
+#import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 
 from build_cnn import build_cnn
 from cnn_utils import load, predict
@@ -17,16 +20,16 @@ np.random.seed(random_seed)
 ## and build the model
 g2 = tf.Graph()
 with g2.as_default():
-    tf.compat.v1.set_random_seed(random_seed)
+    tf.set_random_seed(random_seed)
     ## build the graph
     build_cnn()
 
     ## saver:
-    saver = tf.compat.v1.train.Saver()
+    saver = tf.train.Saver()
 
 ## create a new session 
 ## and restore the model
-with tf.compat.v1.Session(graph=g2) as sess:
+with tf.Session(graph=g2) as sess:
     load(saver, sess, 
          epoch=20, path='./model/')
     
