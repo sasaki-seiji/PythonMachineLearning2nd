@@ -1,5 +1,6 @@
 python-machine-learning-book-2nd-edition-master/
 __pycache__/
+.vscode/
 *.png
 aclImdb/
 *.csv
