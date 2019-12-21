@@ -1,6 +1,6 @@
 import numpy as np
 
-from word2int_review import mapped_reviews, df
+from word2int_review import mapped_reviews, df, word_to_int
 
 ## Define fixed-length sequences:
 ## Use the last 200 elements of each sequence
