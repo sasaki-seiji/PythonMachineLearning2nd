@@ -54,9 +54,9 @@ class CharRNN(object):
         y_onehot = tf.one_hot(tf_y, depth=self.num_classes)
 
         ### Build the multi-layer RNN cells
-        cells = tf.contrib.rnn.MultiRNNCell(
-            [tf.contrib.rnn.DropoutWrapper(
-                tf.contrib.rnn.BasicLSTMCell(self.lstm_size), 
+        cells = tf.nn.rnn_cell.MultiRNNCell(
+            [tf.nn.rnn_cell.DropoutWrapper(
+                tf.nn.rnn_cell.BasicLSTMCell(self.lstm_size), 
                 output_keep_prob=tf_keepprob) 
             for _ in range(self.num_layers)])
         
