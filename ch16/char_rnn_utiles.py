@@ -44,3 +44,10 @@ for b in bgen:
     print(''.join(int2char[i] for i in b[0][0,:]).replace('\n', '*'), '    ',
           ''.join(int2char[i] for i in b[1][0,:]).replace('\n', '*'))
 
+
+def get_top_char(probas, char_size, top_n=5):
+    p = np.squeeze(probas)
+    p[np.argsort(p)[:-top_n]] = 0.0
+    p = p / np.sum(p)
+    ch_id = np.random.choice(char_size, 1, p=p)[0]
+    return ch_id
