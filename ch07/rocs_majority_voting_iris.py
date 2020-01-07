@@ -10,12 +10,14 @@ mv_clf = MajorityVoteClassifier(classifiers=[pipe1, clf2, pipe3])
 clf_labels += ['Majority voting']
 all_clf = [pipe1, clf2, pipe3, mv_clf]
 
-for clf, label in zip(all_clf, clf_labels):
-    scores = cross_val_score(estimator=clf,
-                             X=X_train,
-                             y=y_train,
-                             cv=10,
-                             scoring='roc_auc')
-    print("ROC AUC: %0.2f (+/- %0.2f) [%s]"
-          % (scores.mean(), scores.std(), label))
+# 2020.01.07 change
+if __name__ == '__main__':
+    for clf, label in zip(all_clf, clf_labels):
+        scores = cross_val_score(estimator=clf,
+                                X=X_train,
+                                y=y_train,
+                                cv=10,
+                                scoring='roc_auc')
+        print("ROC AUC: %0.2f (+/- %0.2f) [%s]"
+            % (scores.mean(), scores.std(), label))
 
