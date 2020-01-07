@@ -42,4 +42,5 @@ X_train, X_test, y_train, y_test =            train_test_split(X, y,
                              stratify=y)
 
 # 2020.01.07 add
-print('X_train[0]: ', X_train[0], ', y_train[0]: ', y_train[0])
+print('X_train.shape:', X_train.shape)
+print('y_train.shape:', y_train.shape)
